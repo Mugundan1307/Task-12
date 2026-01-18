@@ -14,21 +14,43 @@ pip install tflite-runtime  # For running TFLite on RPi
 pip install tensorflow==2.12  # For training on Mac/PC
 ```
 
-### Folder Structure
+### Dataset recording in RPI
+Use record.py script to capture keywords. And organize folder structure as yes, no and background
 
-rpi-keyword-spotting/
-│
-├─ datasets/        # Raw audio recordings (yes, no, bg)
-├─ features/        # MFCC features
-├─ training/        # Scripts and dataset arrays
-├─ models/          # Saved Keras/TFLite models
-├─ inference/       # Live inference scripts
+### Extract MFCC features in PC
+```
+cd ~/rpi-keyword-spotting/training
+python extract_features.py
+```
+Output: MFCC features saved in features/
 
-### Dataset
-Use record.py script to capture keywords. And organize folder structure:
+### Create dataset arrays in PC
+```
+python create.py
+```
+Output: X.npy, y.npy
 
-datasets/
-│
-├─ yes/
-├─ no/
-└─ bg/
+### Train the Model in PC
+```
+python train.py
+```
+Output: Produces keyword_cnn.h5 or kws_model.h5
+
+### Convert the .h5 to .tflite by using convert_tflite.py
+```
+python convert_tflite.py
+```
+Output: keyword_cnn.tflite
+
+### Then quantize it using quantize.py
+```
+python quantize.py
+```
+Output: kws_model_quant.tflite
+Move the .tflite file to the RPi models/ folder
+
+### Live inference on RPI
+```
+cd ~/rpi-keyword-spotting/inference
+python3 inference.py
+```
