@@ -6,12 +6,17 @@ python3 -m venv kws_env
 source kws_env/bin/activate
 ```
 
-### Install core Python packages
+### On PC
+```
+pip install numpy scipy scikit-learn sounddevice soundfile librosa==0.9.2 joblib h5py tensorflow absl-py decorator pooch resampy
+```
+
+### Install core Python packages on RPI
 ```
 pip install --upgrade pip setuptools wheel
 pip install numpy scipy scikit-learn soundfile
-pip install tflite-runtime  # For running TFLite on RPi
-pip install tensorflow==2.12  # For training on Mac/PC
+pip install tflite-runtime
+pip install sounddevice librosa==0.9.2 resampy decorator pooch
 ```
 
 ### Dataset recording in RPI
